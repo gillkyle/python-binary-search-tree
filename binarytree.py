@@ -29,8 +29,14 @@ class BinaryTree(object):
         Retrieves the value under the given key.
         Returns None if the key does not exist.
         '''
-        # TODO
-        return None
+        if self.root:
+            value = self._get(key, self.root)
+            if value:
+                return value
+            else:
+                return None
+        else:
+            return None
 
     def remove(self, key):
         '''
@@ -108,6 +114,16 @@ class BinaryTree(object):
                 self._set(key, value, current.right)
             else:
                 current.right = Node(current, key, value)
+
+    def _get(self, key, current):
+        if not current:
+            return None
+        elif current.key == key:
+            return current.value
+        elif key < current.key:
+            return self._get(key, current.left)
+        else:
+            return self._get(key, current.right)
 
 
 class Node(object):
