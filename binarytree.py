@@ -50,9 +50,8 @@ class BinaryTree(object):
             # found node to delete
             if current.key == key:
                 if current.left is not None and current.right is not None:
-                    print("2 leaves")
-                    print(f"for key {current.key}")
-
+                    # print("2 leaves")
+                    # print(f"for key {current.key}")
                     [min_parent_node, min_node] = current.right._find_min(
                         current.parent)
                     # get rid of the min node
@@ -70,8 +69,8 @@ class BinaryTree(object):
                     # return the min_node's tree to get out of recursion
                     return min_node
                 elif current.left is not None or current.right is not None:
-                    print("1 leaf")
-                    print(f"for key {current.key}")
+                    # print("1 leaf")
+                    # print(f"for key {current.key}")
                     # return/promote tree from correct side
                     if current.left:
                         if current.parent.left and current.parent.left.key == current.key:
@@ -86,8 +85,8 @@ class BinaryTree(object):
                             current.parent.right = current.right
                         return current.right
                 else:
-                    print("0 leaves")
-                    print(f"for key {current.key}")
+                    # print("0 leaves")
+                    # print(f"for key {current.key}")
                     if current.parent.left and current.parent.left.key == current.key:
                         current.parent.left = None
                     elif current.parent.right and current.parent.right.key == current.key:
@@ -261,7 +260,6 @@ class Node(object):
 
     def _find_min(self, parent):
         """ return the minimum node in the current tree and its parent """
-        print(parent)
         if self.left:
             return self.left._find_min(self)
         else:
