@@ -43,18 +43,68 @@ class BinaryTree(object):
         Removes the given key from the tree.
         Returns silently if the key does not exist.
         '''
-        # if self.root == None:
-        #     return
+        if self.root == None:
+            return
 
-        # def recurse(current):
-        #     # found node to delete
-        #     if current.key == key:
-        #         if current._has_both_leaves:
+        def recurse(current, key):
+            # found node to delete
+            if current.key == key:
+                if current.left is not None and current.right is not None:
+                    print("2 leaves")
+                    print(f"for key {current.key}")
 
-        #     else:
+                    [min_parent_node, min_node] = current.right._find_min(
+                        current.parent)
+                    # get rid of the min node
+                    if min_parent_node.left == min_node:
+                        min_parent_node.left = min_node.right
+                    else:
+                        min_parent_node.right = min_node.right
 
+                    # set min_node at replace level
+                    min_node.left = current.left
+                    min_node.right = current.right
+                    current.value = min_node.value
+                    current.key = min_node.key
 
+                    # return the min_node's tree to get out of recursion
+                    return min_node
+                elif current.left is not None or current.right is not None:
+                    print("1 leaf")
+                    print(f"for key {current.key}")
+                    # return/promote tree from correct side
+                    if current.left:
+                        if current.parent.left and current.parent.left.key == current.key:
+                            current.parent.left = current.left
+                        elif current.parent.right and current.parent.right.key == current.key:
+                            current.parent.right = current.right
+                        return current.left
+                    else:
+                        if current.parent.left and current.parent.left.key == current.key:
+                            current.parent.left = current.left
+                        elif current.parent.right and current.parent.right.key == current.key:
+                            current.parent.right = current.right
+                        return current.right
+                else:
+                    print("0 leaves")
+                    print(f"for key {current.key}")
+                    if current.parent.left and current.parent.left.key == current.key:
+                        current.parent.left = None
+                    elif current.parent.right and current.parent.right.key == current.key:
+                        current.parent.right = None
+                    return current
+            else:
+                # key is to the left of this section of the tree
+                if current.key > key:
+                    if current.left:
+                        recurse(current.left, key)
+                # key is to the right of this section of the tree
+                else:
+                    if current.right:
+                        recurse(current.right, key)
 
+        recurse(self.root, key)
+        return None
 
     def walk_dfs_inorder(self):
         '''
@@ -209,8 +259,10 @@ class Node(object):
     def _has_right_child(self):
         return self.right
 
-    def _has_leaf(self):
-        return self.right or self.left
-
-    def _has_both_leaves(self):
-        return self.right and self.left
+    def _find_min(self, parent):
+        """ return the minimum node in the current tree and its parent """
+        print(parent)
+        if self.left:
+            return self.left._find_min(self)
+        else:
+            return [parent, self]
