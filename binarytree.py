@@ -64,28 +64,43 @@ class BinaryTree(object):
 
         yield from recurse(self.root)
 
-        # "yield (key, value)" for current node
-        # "yield from walk_*()" when recursing
-
     def walk_dfs_preorder(self, node=None, level=0):
         '''
         An iterator that walks the tree in preorder DFS fashion.
         Yields (key, value) for each node in the tree.
         '''
-        # TODO
-        # "yield (key, value)" for current node
-        # "yield from walk_*()" when recursing
-        return []
+        if self.root == None:
+            return
+
+        def recurse(current):
+            if not current:
+                return
+            yield (current.key, current.value)
+            if current._has_left_child:
+                yield from recurse(current.left)
+            if current._has_right_child:
+                yield from recurse(current.right)
+
+        yield from recurse(self.root)
 
     def walk_dfs_postorder(self, node=None, level=0):
         '''
         An iterator that walks the tree in inorder DFS fashion.
         Yields (key, value) for each node in the tree.
         '''
-        # TODO
-        # "yield (key, value)" for current node
-        # "yield from walk_*()" when recursing
-        return []
+        if self.root == None:
+            return
+
+        def recurse(current):
+            if not current:
+                return
+            if current._has_left_child:
+                yield from recurse(current.left)
+            if current._has_right_child:
+                yield from recurse(current.right)
+            yield (current.key, current.value)
+
+        yield from recurse(self.root)
 
     def walk_bfs(self):
         '''
