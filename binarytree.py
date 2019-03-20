@@ -43,7 +43,18 @@ class BinaryTree(object):
         Removes the given key from the tree.
         Returns silently if the key does not exist.
         '''
-        # TODO
+        # if self.root == None:
+        #     return
+
+        # def recurse(current):
+        #     # found node to delete
+        #     if current.key == key:
+        #         if current._has_both_leaves:
+
+        #     else:
+
+
+
 
     def walk_dfs_inorder(self):
         '''
@@ -107,9 +118,17 @@ class BinaryTree(object):
         An iterator that walks the tree in BFS fashion.
         Yields (key, value) for each node in the tree.
         '''
-        # TODO
-        # "yield (key, value)" for current node
-        return []
+        to_visit = []
+        if self.root == None:
+            return
+        to_visit.append(self.root)
+        while to_visit:
+            current = to_visit.pop(0)
+            yield (current.key, current.value)
+            if current.left:
+                to_visit.append(current.left)
+            if current.right:
+                to_visit.append(current.right)
 
     ##################################################
     # Helper methods
